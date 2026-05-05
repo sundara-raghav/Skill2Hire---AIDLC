@@ -10,6 +10,13 @@ import pandas as pd
 import numpy as np
 from typing import Dict, List, Tuple
 
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils.logger import setup_logger
+
+logger = setup_logger()
+
 try:
     from scipy import stats as scipy_stats
     _SCIPY_AVAILABLE = True
@@ -109,7 +116,7 @@ def validate_dataset(df: pd.DataFrame) -> Tuple[bool, List[str]]:
         try:
             _, p_value = scipy_stats.normaltest(df['cgpa'].dropna())
             if p_value < 0.001:
-                errors.append(f"CGPA distribution may not be normal (p={p_value:.4f}) — warning only")
+                logger.warning(f"CGPA distribution may not be normal (p={p_value:.4f}) — warning only")
         except Exception:
             pass  # Non-critical, skip if test fails
 
@@ -119,7 +126,7 @@ def validate_dataset(df: pd.DataFrame) -> Tuple[bool, List[str]]:
         try:
             corr = df[numeric_cols].corr().loc['cgpa', 'programming_skills']
             if not (0.05 <= abs(corr) <= 0.95):
-                errors.append(
+                logger.warning(
                     f"CGPA-programming_skills correlation {corr:.3f} outside expected range — warning only"
                 )
         except Exception:
