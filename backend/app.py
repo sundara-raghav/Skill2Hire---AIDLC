@@ -9,7 +9,6 @@ import json
 import re
 import logging
 from datetime import datetime
-from functools import wraps
 
 import numpy as np
 import pandas as pd
@@ -44,6 +43,7 @@ limiter = Limiter(
     storage_uri="memory://"
 )
 
+
 # Security headers
 @app.after_request
 def set_security_headers(response):
@@ -60,6 +60,7 @@ def set_security_headers(response):
         "connect-src 'self'"
     )
     return response
+
 
 # Logging
 logging.basicConfig(
@@ -83,7 +84,7 @@ CATEGORICAL_FEATURES = ['branch']
 
 def load_models():
     """Load latest trained models and preprocessing artifacts."""
-    global MODELS, SCALER, ENCODER
+    global SCALER, ENCODER
 
     model_dir = os.path.join(
         os.path.dirname(os.path.abspath(__file__)), '..', 'ml-pipeline', 'models', 'trained'
@@ -279,21 +280,21 @@ def log_prediction(payload: dict, result: dict):
         return
     try:
         record = {
-            'name':                 payload.get('name', ''),
-            'cgpa':                 payload.get('cgpa'),
-            'aptitude_score':       payload.get('aptitude_score'),
-            'programming_skills':   payload.get('programming_skills'),
+            'name': payload.get('name', ''),
+            'cgpa': payload.get('cgpa'),
+            'aptitude_score': payload.get('aptitude_score'),
+            'programming_skills': payload.get('programming_skills'),
             'communication_skills': payload.get('communication_skills'),
-            'num_projects':         payload.get('num_projects'),
-            'internship_experience':payload.get('internship_experience'),
+            'num_projects': payload.get('num_projects'),
+            'internship_experience': payload.get('internship_experience'),
             'certifications_count': payload.get('certifications_count'),
-            'branch':               payload.get('branch', ''),
-            'placement_probability':result.get('placement_probability'),
-            'confidence':           result.get('confidence'),
-            'model_predictions':    json.dumps(result.get('model_predictions', {})),
-            'job_skills_found':     json.dumps(result.get('job_skills_found', [])),
-            'skill_gap_suggestions':json.dumps(result.get('skill_gap_suggestions', [])),
-            'created_at':           datetime.utcnow().isoformat(),
+            'branch': payload.get('branch', ''),
+            'placement_probability': result.get('placement_probability'),
+            'confidence': result.get('confidence'),
+            'model_predictions': json.dumps(result.get('model_predictions', {})),
+            'job_skills_found': json.dumps(result.get('job_skills_found', [])),
+            'skill_gap_suggestions': json.dumps(result.get('skill_gap_suggestions', [])),
+            'created_at': datetime.utcnow().isoformat(),
         }
         supabase.table('predictions').insert(record).execute()
     except Exception as e:
@@ -307,9 +308,9 @@ def log_job_analysis(job_desc_snippet: str, result: dict):
     try:
         record = {
             'job_description_snippet': job_desc_snippet[:500],
-            'skills_found':            json.dumps(result.get('skills_found', [])),
-            'total_skills':            result.get('total_skills', 0),
-            'created_at':              datetime.utcnow().isoformat(),
+            'skills_found': json.dumps(result.get('skills_found', [])),
+            'total_skills': result.get('total_skills', 0),
+            'created_at': datetime.utcnow().isoformat(),
         }
         supabase.table('job_analyses').insert(record).execute()
     except Exception as e:
@@ -351,8 +352,10 @@ def predict():
                 predictions[name] = round(prob * 100, 1)
                 probabilities[name] = prob
 
-        ensemble_prob = probabilities.get('voting_classifier',
-                        np.mean(list(probabilities.values())) if probabilities else 0.5)
+        ensemble_prob = probabilities.get(
+            'voting_classifier',
+            np.mean(list(probabilities.values())) if probabilities else 0.5
+        )
         placement_probability = round(float(ensemble_prob) * 100, 1)
 
         # Skill gap analysis
