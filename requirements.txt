@@ -1,0 +1,19 @@
+# Root requirements — combines ml-pipeline + backend dependencies
+# Used by Render native Python environment
+
+# ── Flask Backend ─────────────────────────────────────────
+Flask~=3.0.0
+flask-cors~=4.0.0
+Flask-Limiter~=3.5.0
+limits~=3.6.0
+gunicorn~=21.2.0
+
+# ── Supabase ──────────────────────────────────────────────
+supabase>=2.0.0
+
+# ── ML Pipeline ───────────────────────────────────────────
+scikit-learn>=1.3.0
+numpy>=1.26.0
+pandas>=2.1.0
+scipy>=1.11.0
+joblib>=1.3.0
