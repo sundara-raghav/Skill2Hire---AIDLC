@@ -8,7 +8,6 @@ Voting Classifier requires at least 2 successful base models (RULE-EH-003).
 
 import sys
 import os
-import numpy as np
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, VotingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, cross_val_score

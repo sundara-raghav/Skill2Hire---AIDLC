@@ -1,0 +1,21 @@
+[flake8]
+max-line-length = 120
+exclude =
+    ml-pipeline/models/trained,
+    ml-pipeline/logs,
+    ml-pipeline/reports,
+    .git,
+    __pycache__,
+    .venv,
+    venv
+
+# E402: sys.path.append before imports is intentional (package structure)
+# W293: blank lines with whitespace (Windows CRLF artifact)
+# W291: trailing whitespace
+# W504: line break after binary operator (style preference, conflicts with W503)
+ignore = E402,W293,W291,W504
+
+# Test files use sys/os for path compat even though conftest.py handles it
+per-file-ignores =
+    ml-pipeline/tests/*:F401
+    backend/tests/*:F401

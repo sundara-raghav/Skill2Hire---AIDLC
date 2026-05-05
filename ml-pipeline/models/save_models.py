@@ -106,7 +106,10 @@ def _get_hyperparams(model_name):
         'random_forest': Config.get_rf_params(),
         'gradient_boosting': Config.get_gb_params(),
         'logistic_regression': Config.get_lr_params(),
-        'voting_classifier': {'voting': 'soft', 'estimators': ['random_forest', 'gradient_boosting', 'logistic_regression']},
+        'voting_classifier': {
+            'voting': 'soft',
+            'estimators': ['random_forest', 'gradient_boosting', 'logistic_regression']
+        },
     }
     return mapping.get(model_name, {})
 

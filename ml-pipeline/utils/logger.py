@@ -6,7 +6,6 @@ Provides centralized logging configuration for the ML Pipeline.
 
 import logging
 import os
-from datetime import datetime
 
 _DEFAULT_LOG_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs')
 

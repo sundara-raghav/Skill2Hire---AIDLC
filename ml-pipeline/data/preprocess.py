@@ -5,7 +5,6 @@ Handles train-test split, feature scaling, and categorical encoding.
 """
 
 import pandas as pd
-import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 import pickle
@@ -51,9 +50,8 @@ def preprocess_data(df: pd.DataFrame):
     
     # Identify numeric and categorical columns
     numeric_features = ['cgpa', 'aptitude_score', 'programming_skills',
-                       'communication_skills', 'num_projects', 'certifications_count']
+                        'communication_skills', 'num_projects', 'certifications_count']
     categorical_features = ['branch']
-    binary_features = ['internship_experience']
     
     # Feature scaling (MinMaxScaler)
     logger.info("Applying MinMaxScaler to numeric features")
@@ -85,7 +83,11 @@ def preprocess_data(df: pd.DataFrame):
     logger.info(f"Preprocessed features shape: {X_train_encoded.shape}")
     logger.info(f"Feature columns: {list(X_train_encoded.columns)}")
     
-    return X_train_encoded, X_test_encoded, y_train.reset_index(drop=True), y_test.reset_index(drop=True), scaler, encoder
+    return (
+        X_train_encoded, X_test_encoded,
+        y_train.reset_index(drop=True), y_test.reset_index(drop=True),
+        scaler, encoder
+    )
 
 
 def save_preprocessing_artifacts(scaler, encoder, version, model_dir):

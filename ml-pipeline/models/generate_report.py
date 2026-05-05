@@ -123,7 +123,10 @@ def generate_evaluation_report(metrics, version, dataset_size, duration, report_
         if best_acc >= Config.ACCURACY_THRESHOLD:
             lines.append(f"- [PASS] Deploy **{best}** as primary model (F1={best_f1}, Accuracy={best_acc})")
         else:
-            lines.append(f"- [WARN] Best model **{best}** accuracy {best_acc:.4f} below {Config.ACCURACY_THRESHOLD} threshold")
+            lines.append(
+                f"- [WARN] Best model **{best}** accuracy {best_acc:.4f}"
+                f" below {Config.ACCURACY_THRESHOLD} threshold"
+            )
             lines.append("- Consider retraining with more data or tuned hyperparameters")
 
         failing = [n for n, m in metrics.items() if not m.get('performance_threshold_met', False)]
