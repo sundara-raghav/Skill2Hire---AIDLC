@@ -1,0 +1,40 @@
+{
+  "accuracy": 0.97,
+  "precision": 0.97,
+  "recall": 0.97,
+  "f1_score": 0.97,
+  "roc_auc": 0.9967,
+  "confusion_matrix": [
+    [
+      97,
+      3
+    ],
+    [
+      3,
+      97
+    ]
+  ],
+  "feature_importance": {
+    "cgpa": 0.746271,
+    "Experience_Score": 0.079091,
+    "Total_Skills_Score": 0.059246,
+    "programming_skills": 0.053051,
+    "aptitude_score": 0.032211,
+    "CGPA_Project_Score": 0.013573,
+    "internship_experience": 0.008011,
+    "certifications_count": 0.002051,
+    "branch_CS": 0.001806,
+    "communication_skills": 0.000769,
+    "branch_Chemical": 0.000716,
+    "branch_IT": 0.00063,
+    "branch_ECE": 0.000586,
+    "num_projects": 0.00057,
+    "branch_EEE": 0.000393,
+    "branch_Civil": 0.000367,
+    "branch_Other": 0.000353,
+    "branch_Mechanical": 0.000306
+  },
+  "cv_f1_mean": 0.9627,
+  "cv_f1_std": 0.0162,
+  "performance_threshold_met": true
+}
