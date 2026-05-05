@@ -1,0 +1,23 @@
+# Backend Dependencies
+Flask~=3.0.0
+flask-cors~=4.0.0
+Flask-Limiter~=3.5.0
+limits~=3.6.0
+gunicorn~=21.2.0
+
+# Supabase
+supabase>=2.0.0
+gotrue>=2.0.0
+storage3>=0.5.0
+
+# ML (must match ml-pipeline versions)
+scikit-learn>=1.3.0
+numpy>=1.26.0
+pandas>=2.1.0
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# Code Quality
+flake8>=6.0.0

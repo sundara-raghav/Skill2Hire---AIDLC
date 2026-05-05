@@ -1,0 +1,91 @@
+name: ML Pipeline CI/CD
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 0 * * *'   # Daily at midnight UTC (NFR: frequent retraining)
+  workflow_dispatch:        # Manual trigger
+
+jobs:
+  train-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15     # NFR: training < 1 min, CI/CD < 10 min
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          lfs: true         # Pull Git LFS model files
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('ml-pipeline/requirements.txt', 'backend/requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
+
+      - name: Install ML pipeline dependencies
+        run: pip install -r ml-pipeline/requirements.txt
+
+      - name: Install backend dependencies
+        run: pip install -r backend/requirements.txt
+
+      - name: Lint ML pipeline (flake8, max-line-length=120)
+        run: flake8 ml-pipeline/ --max-line-length=120 --exclude=ml-pipeline/models/trained,ml-pipeline/logs,ml-pipeline/reports
+
+      - name: Lint backend (flake8)
+        run: flake8 backend/ --max-line-length=120 --exclude=backend/tests
+
+      - name: Run ML pipeline tests
+        run: pytest ml-pipeline/tests/ -v --tb=short --cov=ml-pipeline --cov-report=term-missing
+
+      - name: Run backend tests
+        run: pytest backend/tests/ -v --tb=short
+
+      - name: Train ML models
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python ml-pipeline/train.py --size 1000 --seed 42
+
+      - name: Upload logs and reports (90-day retention)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ml-pipeline-artifacts-${{ github.run_number }}
+          path: |
+            ml-pipeline/logs/
+            ml-pipeline/reports/
+          retention-days: 90
+
+      - name: Commit trained models back to repo
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add ml-pipeline/models/trained/ || true
+          git add ml-pipeline/data/training_dataset.csv || true
+          git diff --staged --quiet || git commit -m "chore: update trained models [skip ci]"
+          git push
+
+  deploy:
+    needs: train-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Trigger Render deploy
+        run: |
+          if [ -n "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" ]; then
+            curl -s -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" \
+              -H "Content-Type: application/json"
+            echo "Deploy triggered"
+          else
+            echo "RENDER_DEPLOY_HOOK_URL not configured, skipping deploy"
+          fi

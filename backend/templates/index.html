@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skill2Hire — Placement Predictor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="container">
+      <h1 class="logo">Skill2Hire</h1>
+      <p class="tagline">AI-Powered Placement Prediction</p>
+    </div>
+  </header>
+
+  <main class="container" id="main-content">
+    <!-- Nav Tabs -->
+    <nav class="tabs" role="tablist" aria-label="Application sections">
+      <button class="tab active" role="tab" aria-selected="true" aria-controls="panel-predict" id="tab-predict" onclick="switchTab('predict')">Predict</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="panel-insights" id="tab-insights" onclick="switchTab('insights')">Insights</button>
+    </nav>
+
+    <!-- ── Predict Panel ── -->
+    <section id="panel-predict" role="tabpanel" aria-labelledby="tab-predict">
+      <div class="card">
+        <h2>Student Profile</h2>
+        <form id="predict-form" novalidate aria-label="Placement prediction form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">Name <span class="optional">(optional)</span></label>
+              <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name" />
+            </div>
+
+            <div class="form-group">
+              <label for="cgpa">CGPA <span class="required" aria-label="required">*</span></label>
+              <input type="number" id="cgpa" name="cgpa" min="0" max="10" step="0.01"
+                     placeholder="0.0 – 10.0" required aria-required="true" />
+            </div>
+
+            <div class="form-group">
+              <label for="aptitude_score">Aptitude Score <span class="required" aria-label="required">*</span></label>
+              <input type="number" id="aptitude_score" name="aptitude_score" min="0" max="100"
+                     placeholder="0 – 100" required aria-required="true" />
+            </div>
+
+            <div class="form-group">
+              <label for="programming_skills">Programming Skills <span class="required" aria-label="required">*</span></label>
+              <input type="number" id="programming_skills" name="programming_skills" min="1" max="10"
+                     placeholder="1 – 10" required aria-required="true" />
+            </div>
+
+            <div class="form-group">
+              <label for="communication_skills">Communication Skills <span class="required" aria-label="required">*</span></label>
+              <input type="number" id="communication_skills" name="communication_skills" min="1" max="10"
+                     placeholder="1 – 10" required aria-required="true" />
+            </div>
+
+            <div class="form-group">
+              <label for="num_projects">Number of Projects <span class="required" aria-label="required">*</span></label>
+              <input type="number" id="num_projects" name="num_projects" min="0" max="10"
+                     placeholder="0 – 10" required aria-required="true" />
+            </div>
+
+            <div class="form-group">
+              <label for="certifications_count">Certifications <span class="required" aria-label="required">*</span></label>
+              <input type="number" id="certifications_count" name="certifications_count" min="0" max="10"
+                     placeholder="0 – 10" required aria-required="true" />
+            </div>
+
+            <div class="form-group">
+              <label for="branch">Branch <span class="required" aria-label="required">*</span></label>
+              <select id="branch" name="branch" required aria-required="true">
+                <option value="">Select branch</option>
+                <option value="CS">Computer Science</option>
+                <option value="IT">Information Technology</option>
+                <option value="ECE">Electronics & Communication</option>
+                <option value="EEE">Electrical & Electronics</option>
+                <option value="Mechanical">Mechanical</option>
+                <option value="Civil">Civil</option>
+                <option value="Chemical">Chemical</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="internship_experience" name="internship_experience" />
+                <span>Internship Experience</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="job_description">Job Description <span class="optional">(optional — for skill gap analysis)</span></label>
+            <textarea id="job_description" name="job_description" rows="5"
+                      placeholder="Paste the job description here to get skill gap analysis..."></textarea>
+          </div>
+
+          <div id="form-errors" class="error-box" role="alert" aria-live="polite" hidden></div>
+
+          <button type="submit" class="btn-primary" id="submit-btn" aria-label="Get placement prediction">
+            <span id="btn-text">Predict Placement</span>
+            <span id="btn-spinner" class="spinner" hidden aria-hidden="true"></span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Results -->
+      <section id="results" hidden aria-live="polite" aria-label="Prediction results">
+        <div class="results-grid">
+          <div class="card result-card highlight">
+            <h3>Placement Probability</h3>
+            <div class="big-number" id="placement-prob" aria-label="Placement probability percentage">—</div>
+            <div class="confidence" id="confidence-score"></div>
+          </div>
+
+          <div class="card result-card">
+            <h3>Model Comparison</h3>
+            <canvas id="model-chart" aria-label="Bar chart comparing model predictions" role="img"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Skill Gap Analysis</h3>
+          <div id="job-skills" class="skill-tags" aria-label="Skills found in job description"></div>
+          <ul id="suggestions-list" class="suggestions" aria-label="Improvement suggestions"></ul>
+        </div>
+      </section>
+    </section>
+
+    <!-- ── Insights Panel ── -->
+    <section id="panel-insights" role="tabpanel" aria-labelledby="tab-insights" hidden>
+      <div class="card">
+        <div class="insights-header">
+          <h2>College-wide Insights</h2>
+          <button class="btn-secondary" onclick="loadInsights()" aria-label="Refresh insights data">Refresh</button>
+        </div>
+        <div id="insights-error" class="error-box" role="alert" aria-live="polite" hidden></div>
+        <div id="insights-content" hidden>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-value" id="stat-total">—</div>
+              <div class="stat-label">Total Students</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-placement-rate">—</div>
+              <div class="stat-label">Overall Placement Rate</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-avg-cgpa">—</div>
+              <div class="stat-label">Average CGPA</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-internship-rate">—</div>
+              <div class="stat-label">Internship → Placement Rate</div>
+            </div>
+          </div>
+          <div class="card chart-card">
+            <h3>Placement Rate by Branch</h3>
+            <canvas id="branch-chart" aria-label="Bar chart of placement rate by branch" role="img"></canvas>
+          </div>
+          <div class="card chart-card">
+            <h3>CGPA Comparison: Placed vs Not Placed</h3>
+            <canvas id="cgpa-chart" aria-label="Bar chart comparing average CGPA" role="img"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p>© 2025 Skill2Hire — AI Placement Prediction</p>
+      {% if supabase_status == 'connected' %}
+      <p class="db-badge" style="justify-content:center;margin-top:.5rem">Supabase Connected</p>
+      {% endif %}
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

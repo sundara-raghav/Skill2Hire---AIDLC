@@ -1,0 +1,86 @@
+{
+  "model_name": "voting_classifier",
+  "version": "v2",
+  "training_date": "2026-05-05T17:37:15.891825Z",
+  "training_duration_seconds": 45.98,
+  "dataset_info": {
+    "total_records": 1000,
+    "train_records": 800,
+    "test_records": 200,
+    "features_count": 18,
+    "feature_names": [
+      "cgpa",
+      "aptitude_score",
+      "programming_skills",
+      "communication_skills",
+      "num_projects",
+      "internship_experience",
+      "certifications_count",
+      "branch_CS",
+      "branch_Chemical",
+      "branch_Civil",
+      "branch_ECE",
+      "branch_EEE",
+      "branch_IT",
+      "branch_Mechanical",
+      "branch_Other",
+      "Total_Skills_Score",
+      "Experience_Score",
+      "CGPA_Project_Score"
+    ]
+  },
+  "hyperparameters": {
+    "voting": "soft",
+    "estimators": [
+      "random_forest",
+      "gradient_boosting",
+      "logistic_regression"
+    ]
+  },
+  "feature_names": [
+    "cgpa",
+    "aptitude_score",
+    "programming_skills",
+    "communication_skills",
+    "num_projects",
+    "internship_experience",
+    "certifications_count",
+    "branch_CS",
+    "branch_Chemical",
+    "branch_Civil",
+    "branch_ECE",
+    "branch_EEE",
+    "branch_IT",
+    "branch_Mechanical",
+    "branch_Other",
+    "Total_Skills_Score",
+    "Experience_Score",
+    "CGPA_Project_Score"
+  ],
+  "feature_count": 18,
+  "scikit_learn_version": "1.3.2",
+  "python_version": "3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]",
+  "file_path": "D:\\Skill2Hire\\ml-pipeline\\models\\trained\\voting_classifier_v2.pkl",
+  "file_size_bytes": 2328407,
+  "metrics": {
+    "accuracy": 0.975,
+    "precision": 0.9798,
+    "recall": 0.97,
+    "f1_score": 0.9749,
+    "roc_auc": 0.9975,
+    "confusion_matrix": [
+      [
+        98,
+        2
+      ],
+      [
+        3,
+        97
+      ]
+    ],
+    "cv_f1_mean": 0.9626,
+    "cv_f1_std": 0.0171,
+    "performance_threshold_met": true
+  },
+  "performance_threshold_met": true
+}

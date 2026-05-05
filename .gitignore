@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# ML artifacts (tracked via Git LFS)
+# ml-pipeline/models/trained/*.pkl  <-- tracked: committed so app boots on Render
+ml-pipeline/data/training_dataset.csv
+
+# Logs
+ml-pipeline/logs/*.log
+*.log
+
+# Reports (generated)
+ml-pipeline/reports/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# Docker
+.dockerignore
