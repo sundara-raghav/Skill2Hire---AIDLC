@@ -1,0 +1,85 @@
+{
+  "model_name": "logistic_regression",
+  "version": "v7",
+  "training_date": "2026-05-07T02:42:59.921143Z",
+  "training_duration_seconds": 5.64,
+  "dataset_info": {
+    "total_records": 1000,
+    "train_records": 800,
+    "test_records": 200,
+    "features_count": 18,
+    "feature_names": [
+      "cgpa",
+      "aptitude_score",
+      "programming_skills",
+      "communication_skills",
+      "num_projects",
+      "internship_experience",
+      "certifications_count",
+      "branch_CS",
+      "branch_Chemical",
+      "branch_Civil",
+      "branch_ECE",
+      "branch_EEE",
+      "branch_IT",
+      "branch_Mechanical",
+      "branch_Other",
+      "Total_Skills_Score",
+      "Experience_Score",
+      "CGPA_Project_Score"
+    ]
+  },
+  "hyperparameters": {
+    "C": 1.0,
+    "penalty": "l2",
+    "solver": "lbfgs",
+    "max_iter": 1000,
+    "random_state": 42
+  },
+  "feature_names": [
+    "cgpa",
+    "aptitude_score",
+    "programming_skills",
+    "communication_skills",
+    "num_projects",
+    "internship_experience",
+    "certifications_count",
+    "branch_CS",
+    "branch_Chemical",
+    "branch_Civil",
+    "branch_ECE",
+    "branch_EEE",
+    "branch_IT",
+    "branch_Mechanical",
+    "branch_Other",
+    "Total_Skills_Score",
+    "Experience_Score",
+    "CGPA_Project_Score"
+  ],
+  "feature_count": 18,
+  "scikit_learn_version": "1.6.1",
+  "python_version": "3.9.25 (main, Nov  3 2025, 15:16:36) \n[GCC 13.3.0]",
+  "file_path": "/home/runner/work/Skill2Hire---AIDLC/Skill2Hire---AIDLC/ml-pipeline/models/trained/logistic_regression_v7.pkl",
+  "file_size_bytes": 1291,
+  "metrics": {
+    "accuracy": 0.945,
+    "precision": 0.9406,
+    "recall": 0.95,
+    "f1_score": 0.9453,
+    "roc_auc": 0.9933,
+    "confusion_matrix": [
+      [
+        94,
+        6
+      ],
+      [
+        5,
+        95
+      ]
+    ],
+    "cv_f1_mean": 0.9299,
+    "cv_f1_std": 0.0234,
+    "performance_threshold_met": true
+  },
+  "performance_threshold_met": true
+}
