@@ -1,0 +1,107 @@
+{
+  "model_name": "random_forest",
+  "version": "v35",
+  "training_date": "2026-06-04T03:49:01.191375Z",
+  "training_duration_seconds": 5.12,
+  "dataset_info": {
+    "total_records": 1000,
+    "train_records": 800,
+    "test_records": 200,
+    "features_count": 18,
+    "feature_names": [
+      "cgpa",
+      "aptitude_score",
+      "programming_skills",
+      "communication_skills",
+      "num_projects",
+      "internship_experience",
+      "certifications_count",
+      "branch_CS",
+      "branch_Chemical",
+      "branch_Civil",
+      "branch_ECE",
+      "branch_EEE",
+      "branch_IT",
+      "branch_Mechanical",
+      "branch_Other",
+      "Total_Skills_Score",
+      "Experience_Score",
+      "CGPA_Project_Score"
+    ]
+  },
+  "hyperparameters": {
+    "n_estimators": 100,
+    "max_depth": 10,
+    "min_samples_split": 5,
+    "min_samples_leaf": 2,
+    "max_features": "sqrt",
+    "random_state": 42,
+    "n_jobs": -1
+  },
+  "feature_names": [
+    "cgpa",
+    "aptitude_score",
+    "programming_skills",
+    "communication_skills",
+    "num_projects",
+    "internship_experience",
+    "certifications_count",
+    "branch_CS",
+    "branch_Chemical",
+    "branch_Civil",
+    "branch_ECE",
+    "branch_EEE",
+    "branch_IT",
+    "branch_Mechanical",
+    "branch_Other",
+    "Total_Skills_Score",
+    "Experience_Score",
+    "CGPA_Project_Score"
+  ],
+  "feature_count": 18,
+  "scikit_learn_version": "1.6.1",
+  "python_version": "3.9.25 (main, Nov  3 2025, 15:16:36) \n[GCC 13.3.0]",
+  "file_path": "/home/runner/work/Skill2Hire---AIDLC/Skill2Hire---AIDLC/ml-pipeline/models/trained/random_forest_v35.pkl",
+  "file_size_bytes": 778668,
+  "metrics": {
+    "accuracy": 0.945,
+    "precision": 0.9495,
+    "recall": 0.94,
+    "f1_score": 0.9447,
+    "roc_auc": 0.9911,
+    "confusion_matrix": [
+      [
+        95,
+        5
+      ],
+      [
+        6,
+        94
+      ]
+    ],
+    "feature_importance": {
+      "cgpa": 0.587399,
+      "CGPA_Project_Score": 0.148575,
+      "Experience_Score": 0.053031,
+      "programming_skills": 0.048799,
+      "Total_Skills_Score": 0.033439,
+      "num_projects": 0.032498,
+      "aptitude_score": 0.028902,
+      "internship_experience": 0.027644,
+      "communication_skills": 0.012875,
+      "certifications_count": 0.011404,
+      "branch_ECE": 0.002393,
+      "branch_Mechanical": 0.002389,
+      "branch_EEE": 0.002335,
+      "branch_Other": 0.002045,
+      "branch_CS": 0.001983,
+      "branch_IT": 0.001937,
+      "branch_Civil": 0.001917,
+      "branch_Chemical": 0.000434
+    },
+    "cv_f1_mean": 0.9551,
+    "cv_f1_std": 0.0109,
+    "performance_threshold_met": true
+  },
+  "performance_threshold_met": true
+}
