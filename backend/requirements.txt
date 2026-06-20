@@ -7,7 +7,7 @@ gunicorn~=21.2.0
 
 # Supabase
 supabase>=2.0.0
-gotrue>=2.0.0
+gotrue>=2.12.4
 storage3>=0.5.0
 
 # ML (must match ml-pipeline versions)
