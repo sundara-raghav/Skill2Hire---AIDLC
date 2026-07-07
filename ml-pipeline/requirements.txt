@@ -4,7 +4,7 @@
 # Core ML Libraries
 scikit-learn==1.6.1
 numpy>=1.26.0
-pandas>=2.1.0
+pandas>=3.0.3
 scipy>=1.11.0
 
 # Parallel Processing
