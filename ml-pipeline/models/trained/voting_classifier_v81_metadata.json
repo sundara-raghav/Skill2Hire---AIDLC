@@ -1,0 +1,86 @@
+{
+  "model_name": "voting_classifier",
+  "version": "v81",
+  "training_date": "2026-07-20T02:45:36.776835Z",
+  "training_duration_seconds": 4.03,
+  "dataset_info": {
+    "total_records": 1000,
+    "train_records": 800,
+    "test_records": 200,
+    "features_count": 18,
+    "feature_names": [
+      "cgpa",
+      "aptitude_score",
+      "programming_skills",
+      "communication_skills",
+      "num_projects",
+      "internship_experience",
+      "certifications_count",
+      "branch_CS",
+      "branch_Chemical",
+      "branch_Civil",
+      "branch_ECE",
+      "branch_EEE",
+      "branch_IT",
+      "branch_Mechanical",
+      "branch_Other",
+      "Total_Skills_Score",
+      "Experience_Score",
+      "CGPA_Project_Score"
+    ]
+  },
+  "hyperparameters": {
+    "voting": "soft",
+    "estimators": [
+      "random_forest",
+      "gradient_boosting",
+      "logistic_regression"
+    ]
+  },
+  "feature_names": [
+    "cgpa",
+    "aptitude_score",
+    "programming_skills",
+    "communication_skills",
+    "num_projects",
+    "internship_experience",
+    "certifications_count",
+    "branch_CS",
+    "branch_Chemical",
+    "branch_Civil",
+    "branch_ECE",
+    "branch_EEE",
+    "branch_IT",
+    "branch_Mechanical",
+    "branch_Other",
+    "Total_Skills_Score",
+    "Experience_Score",
+    "CGPA_Project_Score"
+  ],
+  "feature_count": 18,
+  "scikit_learn_version": "1.6.1",
+  "python_version": "3.9.25 (main, Nov  3 2025, 15:16:36) \n[GCC 13.3.0]",
+  "file_path": "/home/runner/work/Skill2Hire---AIDLC/Skill2Hire---AIDLC/ml-pipeline/models/trained/voting_classifier_v81.pkl",
+  "file_size_bytes": 2341661,
+  "metrics": {
+    "accuracy": 0.965,
+    "precision": 0.9794,
+    "recall": 0.95,
+    "f1_score": 0.9645,
+    "roc_auc": 0.9973,
+    "confusion_matrix": [
+      [
+        98,
+        2
+      ],
+      [
+        5,
+        95
+      ]
+    ],
+    "cv_f1_mean": 0.9652,
+    "cv_f1_std": 0.0178,
+    "performance_threshold_met": true
+  },
+  "performance_threshold_met": true
+}
