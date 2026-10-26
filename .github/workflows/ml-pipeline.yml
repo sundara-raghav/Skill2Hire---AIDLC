@@ -58,7 +58,7 @@ jobs:
         run: python ml-pipeline/train.py --size 1000 --seed 42
 
       - name: Upload logs and reports (90-day retention)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: ml-pipeline-artifacts-${{ github.run_number }}
