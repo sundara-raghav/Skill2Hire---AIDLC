@@ -1,0 +1,20 @@
+{
+  "accuracy": 0.965,
+  "precision": 0.9794,
+  "recall": 0.95,
+  "f1_score": 0.9645,
+  "roc_auc": 0.9973,
+  "confusion_matrix": [
+    [
+      98,
+      2
+    ],
+    [
+      5,
+      95
+    ]
+  ],
+  "cv_f1_mean": 0.9652,
+  "cv_f1_std": 0.0178,
+  "performance_threshold_met": true
+}
